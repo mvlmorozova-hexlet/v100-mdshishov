@@ -33,9 +33,9 @@ const tableParsing = (fileContentStr) => {
   console.log(`Download count: Max count: ${indiaDldsArr.at(-1)}, Min count: ${indiaDldsArr.at(0)}`);
 
   const australiaDldsSortArr = objArr
-    .sort(({ downloads_in_Australia: a }, { downloads_in_Australia: b }) => Number(b) - Number(a));
+    .sort(({ downloads_in_Australia: a }, { downloads_in_Australia: b }) => Number(a) - Number(b));
   const top3AustraliaArr = australiaDldsSortArr
-    .slice(0, 3)
+    .slice(-3)
     .map(({ name }) => name);
 
   console.log(`Top-3 Australia: ${top3AustraliaArr.join(', ')}`);
