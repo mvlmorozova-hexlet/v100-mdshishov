@@ -3,7 +3,7 @@ const tableParsing = (fileContentStr) => {
   const [keysArr, ...dataArr] = fileContentStr
     .split('\n')
     .filter((str) => str !== '')
-    .map((str) => str.split(';');
+    .map((str) => str.split(';'));
 
   const objArr = dataArr
     .map((valuesArr) => valuesArr.reduce((acc, value, i) => {
