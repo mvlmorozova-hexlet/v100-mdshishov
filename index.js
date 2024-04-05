@@ -36,7 +36,8 @@ const tableParsing = (fileContentStr) => {
     .sort(({ downloads_in_Australia: a }, { downloads_in_Australia: b }) => Number(a) - Number(b));
   const top3AustraliaArr = australiaDldsSortArr
     .slice(-3)
-    .map(({ name }) => name);
+    .map(({ name }) => name)
+    .sort();
 
   console.log(`Top-3 Australia: ${top3AustraliaArr.join(', ')}`);
 };
