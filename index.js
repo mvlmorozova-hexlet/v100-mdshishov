@@ -16,12 +16,12 @@ const tableParsing = (fileContentStr) => {
     const sum = properKeysArr.reduce((acc, key) => acc + Number(obj[key]), 0);
     return {
       name: obj.name,
-      deveoper: obj.developer,
+      developer: obj.developer,
       mean: sum / properKeysArr.length,
     };
   });
   const topMesObj = meanRatingObjArr
-    .sort(({ mean1 }, { mean2 }) => mean2 - mean1)
+    .sort(({ mean: a }, { mean: b }) => b - a)
     .at(0);
 
   console.log(`General top messenger: ${topMesObj.name}, Owner: ${topMesObj.developer}`);
