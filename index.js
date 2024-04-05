@@ -25,6 +25,12 @@ const tableParsing = (fileContentStr) => {
     .at(0);
 
   console.log(`General top messenger: ${topMesObj.name}, Owner: ${topMesObj.developer}`);
+
+  const indiaDldsArr = objArr
+    .map(({ downloads_in_India: value }) => Number(value))
+    .sort((a, b) => a - b);
+
+  console.log(`Download count: Max count: ${indiaDldsArr.at(-1)}, Min count: ${indiaDldsArr.at(0)}`);
 };
 
 // task 2
