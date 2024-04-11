@@ -159,6 +159,7 @@ const actorRating = (fileContent) => {
     .filter(([, value]) => Number(value) === mostAwards)
     .map(([key]) => key)
     .sort();
+
   console.log(`Most successful movie: ${mostSuccessful.at(0)}`);
 
   const prizesCount = objs.reduce((acc, { prize }) => {
@@ -174,6 +175,7 @@ const actorRating = (fileContent) => {
     .filter(([, value]) => value === prizesSorted.at(-1).at(1))
     .map(([key]) => key)
     .sort();
+
   console.log(`Awards statisctics: Award's pet: ${pet.at(0)}, Award's outsider: ${outsider.at(0)}`);
 };
 
