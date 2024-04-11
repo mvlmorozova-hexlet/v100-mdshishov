@@ -1,45 +1,69 @@
 // task 1
-const tableParsing = (fileContentStr) => {
-  const [keysArr, ...dataArr] = fileContentStr
+const tableParsing = (fileContent) => {
+  const [keys, ...data] = fileContent
     .split('\n')
     .filter((str) => str !== '')
     .map((str) => str.split(';'));
 
-  const objArr = dataArr
-    .map((valuesArr) => valuesArr.reduce((acc, value, i) => {
-      acc[keysArr[i]] = value;
+  const objs = data
+    .map((values) => values.reduce((acc, value, i) => {
+      acc[keys[i]] = value;
       return acc;
     }, {}));
 
-  const meanRatingObjArr = objArr.map((obj) => {
-    const properKeysArr = keysArr.filter((key) => key.endsWith('_rating'));
-    const sum = properKeysArr.reduce((acc, key) => acc + Number(obj[key]), 0);
+  const meanRatingObjs = objs.map((obj) => {
+    const properKeys = keys.filter((key) => key.endsWith('_rating'));
+    const sum = properKeys.reduce((acc, key) => acc + Number(obj[key]), 0);
     return {
       name: obj.name,
       developer: obj.developer,
-      mean: sum / properKeysArr.length,
+      mean: sum / properKeys.length,
     };
   });
-  const topMesObj = meanRatingObjArr
+  const topMesObj = meanRatingObjs
     .sort(({ mean: a }, { mean: b }) => b - a)
     .at(0);
 
   console.log(`General top messenger: ${topMesObj.name}, Owner: ${topMesObj.developer}`);
 
-  const indiaDldsArr = objArr
+  const indiaDownloads = objs
     .map(({ downloads_in_India: value }) => Number(value))
     .sort((a, b) => a - b);
 
-  console.log(`Download count: Max count: ${indiaDldsArr.at(-1)}, Min count: ${indiaDldsArr.at(0)}`);
+  console.log(`Download count: Max count: ${indiaDownloads.at(-1)}, Min count: ${indiaDownloads.at(0)}`);
 
-  const australiaDldsSortArr = objArr
-    .sort(({ downloads_in_Australia: a }, { downloads_in_Australia: b }) => Number(a) - Number(b));
-  const top3AustraliaArr = australiaDldsSortArr
+  const top3Australia = objs
+    .sort(({ downloads_in_Australia: a }, { downloads_in_Australia: b }) => Number(a) - Number(b))
     .slice(-3)
     .map(({ name }) => name)
     .sort();
 
-  console.log(`Top-3 Australia: ${top3AustraliaArr.join(', ')}`);
+  console.log(`Top-3 Australia: ${top3Australia.join(', ')}`);
+
+  const meanGlobalDownloads = objs.map((obj) => {
+    const properKeys = keys.filter((key) => key.startsWith('downloads_in_'));
+    const sum = properKeys.reduce((acc, key) => acc + Number(obj[key]), 0);
+    return {
+      name: obj.name,
+      mean: sum / properKeys.length,
+    };
+  });
+  const topDownloadsNames = meanGlobalDownloads
+    .sort(({ mean: a }, { mean: b }) => b - a)
+    .map(({ name }) => name);
+
+  console.log(`Top downloads: ${topDownloadsNames.join(', ')}`);
+
+  const appsOwnCount = objs.reduce((acc, { developer }) => {
+    acc[developer] = (acc[developer] ?? 0) + 1;
+    return acc;
+  }, {});
+  const topOwner = Object.entries(appsOwnCount)
+    .sort(([, a], [, b]) => b - a)
+    .at(0)
+    .at(0);
+
+  console.log(`Top owner: ${topOwner}`);
 };
 
 // task 2
